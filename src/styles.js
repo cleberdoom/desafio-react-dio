@@ -1,0 +1,16 @@
+import {createGlobalStyle} from 'styled-components';
+
+export default createGlobalStyle`
+
+*, body{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color:white;
+    background-color: #22272e;
+}
+
+
+`
