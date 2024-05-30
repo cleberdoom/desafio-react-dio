@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import gitlogo from '../assets/background.png'
-import Input from '../components/Input';
-import Button from '../components/Button';
-import ItemRepo from '../components/ItemRepo';
-import { Container } from './styles';
-import { api } from '../services/api';
+
+import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom'
+import {Home} from './Home/index';
+import {Login} from '././Login/index';
+import {Feed} from './Feed/index'
+import { Signup } from './Signup';
+import  Button  from '../components/Button';
+
 
 
 
@@ -12,44 +13,20 @@ import { api } from '../services/api';
 
 
 function App() {
+  return(
+    <>
+    <Router>  
+      <Routes>
 
-  const [currentRepo,setCurrentRepo ] = useState('');
-  const [repo,setRepos] = useState([]);
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/feed' element={<Feed />} />
+        <Route path='/signup' element={<Signup />} />
 
-  const handleSearchRepo = async () => {
-    const {data} =  await api.get(`repos/${currentRepo}`)
-
-    if(data.id){
-      const isExist = repo.find(repo => repo.id === data.id)
-
-      if(!isExist){
-        setRepos(prev => [...prev, data])
-        setCurrentRepo('')
-        return
-    }
-  }
-
-      
-    alert('Repositorio não encontrado')
-  }
-
-  const handleDeleteRepo = (id) => {
-    setRepos(prev => prev.filter(repo => repo.id !== id));
-  };
-
-
-
-
-  return (
-    <Container>
-      <img src={gitlogo} width={72} height={72} alt='github logo' />
-      <Input value={currentRepo} onChange={(e) => setCurrentRepo(e.target.value)} />
-      <Button onClick={handleSearchRepo} />
-      {repo.map(repo => (
-        <ItemRepo id={repo.id} repo={repo} remove={() => handleDeleteRepo(repo.id)} />
-      ))}
-    </Container>
-  );
+      </Routes>
+    </Router>
+    </>
+  )
 }
 
 export default App;
